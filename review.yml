@@ -1,0 +1,76 @@
+aid: security-service-fcu
+name: Security Service Federal Credit Union
+review:
+  question: Does Security Service FCU expose a first-party public developer API, downloadable OpenAPI spec, or documented FDX / CFPB 1033 data-access surface?
+  answer: false
+  date: '2026-07-23'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    Security Service Federal Credit Union (SSFCU) publishes no first-party
+    public developer API and no developer portal. Probes of the common
+    developer subdomains (developer.ssfcu.org, developers.ssfcu.org,
+    api.ssfcu.org) failed to resolve (curl exit / HTTP 000), and the main
+    site returns HTTP 404 for /developers, /developer, and /api. No
+    downloadable OpenAPI or Swagger specification is published, so no spec
+    was harvested. This is the ordinary posture for a US credit union: open
+    finance in the US is voluntary and fragmented, with no single mandated
+    open-banking contract. SSFCU documents no FDX (Financial Data Exchange)
+    participation and no stated CFPB Section 1033 (Personal Financial Data
+    Rights) data-access API. Any API capability is delivered through the
+    institution's core banking provider rather than a self-serve developer
+    program, and consumer-permissioned account data is reachable only
+    indirectly through third-party aggregators (Plaid / MX / Finicity /
+    Akoya) rather than a first-party API. The record is identity-only.
+  posture:
+    firstPartyDeveloperPortal: false
+    developerPortalURL: null
+    downloadableSpec: false
+    specProvenance: none
+    fdxParticipant: false
+    section1033Posture: none documented
+    aggregatorAccessOnly: true
+    coreProviderDelivered: true
+    authModel: not applicable (no public API surface)
+  transports:
+    - protocol: REST
+      scheme: https
+      documented: false
+      note: No public first-party REST API is documented for Security Service FCU.
+  probes:
+    - url: https://ssfcu.org
+      status: 200
+      note: Main marketing/banking site resolves; member online banking and mobile apps only, no developer content.
+    - url: https://developer.ssfcu.org
+      status: 000
+      note: Host does not resolve — no developer portal subdomain.
+    - url: https://developers.ssfcu.org
+      status: 000
+      note: Host does not resolve.
+    - url: https://api.ssfcu.org
+      status: 000
+      note: Host does not resolve — no public API host.
+    - url: https://ssfcu.org/developers
+      status: 404
+      note: No developers path on the main site.
+    - url: https://ssfcu.org/developer
+      status: 404
+      note: No developer path.
+    - url: https://ssfcu.org/api
+      status: 404
+      note: No api path.
+sources:
+  - url: https://ssfcu.org/
+    type: Website
+    note: Confirms institution identity — San Antonio, TX credit union, NCUA-insured, member-owned; no developer/API references.
+  - url: https://ssfcu.org/about-us
+    type: About
+    note: Institutional profile page (HTTP 200).
+actions:
+  apisYmlUpdated: true
+  openapiHarvested: false
+  reason: |
+    No public API surface exists to catalog. apis[] is empty and the record
+    captures verified institutional identity plus honest open-finance
+    posture (aggregator-only, no FDX / 1033 documentation). No spec files
+    were written because none are publicly downloadable.

@@ -54,10 +54,12 @@ tags_raw:
 - Open Finance
 - Financial-Services
 created: '2026-07-23'
-modified: '2026-07-23'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis: []
 common:
+- url: https://ssfcu.org/investments/articles
+  type: Blog
 - type: Login
   url: https://ssfcu.org/login
 - type: DomainSecurity
